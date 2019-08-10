@@ -1,0 +1,25 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#game{
+    width: 800px;
+    height: 600px;
+    background: url('images/sky.png');
+    position: relative;
+    overflow: hidden;
+
+}
+#bird{
+   width: 34px;
+   height: 25px;
+   background: url('images/birds.png') -10px -8px no-repeat ;
+   position: absolute;
+   top: 100px;
+   left: 100px;
+}
+
+#score{
+    font-size: 24px;
+    font-weight: bold;
+}
