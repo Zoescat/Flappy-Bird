@@ -51,7 +51,7 @@ function createPipe(position) {
     var pipe = {};
     pipe.x = position;
     // 规定上管道的高度200-300之间
-    pipe.uHeight = 200 + parseInt(Math.random() * 100);
+    pipe.uHeight = 200 + parseInt(Math.random() * 100); // parseInt(Math.random() * 100) 生成0-99的随机数
     pipe.dHeight = 600 - pipe.uHeight - 200;
     pipe.dTop = pipe.uHeight + 200;
     //上管道
@@ -94,6 +94,7 @@ function createPipe(position) {
     }, 30)
 }
 
+
 createPipe(400);
 createPipe(600);
 createPipe(800);
@@ -106,27 +107,27 @@ setInterval(function () {
     if (running) {
         scoreEle.innerText = score++;
     }
-}, 100)
+}, 500)
 
 //背景音乐
 //音乐是否正在播放
-var playing=false;
-setTimeout(function() {  
+var playing = false;
+setTimeout(function () {
     document.getElementById("bgMusic").play();
-    playing=true;
+    playing = true;
 
-    document.getElementById("pauseMusic").addEventListener('click',pause);
-}, 500);  //0.5秒后将会调用执行remind()函数
+    document.getElementById("pauseMusic").addEventListener('click', pause);
+}, 500); //0.5秒后将会调用执行remind()函数
 
 //音乐暂停
 function pause() {
     if (playing) {
-          document.getElementById("bgMusic").pause();
-          playing=false;
-          document.getElementById("pauseMusic").textContent="播放音乐";
-    }else{
+        document.getElementById("bgMusic").pause();
+        playing = false;
+        document.getElementById("pauseMusic").textContent = "播放音乐";
+    } else {
         document.getElementById("bgMusic").play();
-        playing=true;
-        document.getElementById("pauseMusic").textContent="暂停音乐";
+        playing = true;
+        document.getElementById("pauseMusic").textContent = "暂停音乐";
     }
 }
