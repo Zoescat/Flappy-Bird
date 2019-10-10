@@ -12,9 +12,26 @@ var bird = {
     x: birdEle.offsetLeft,
     y: birdEle.offsetTop,
 }
+const birdInit = JSON.parse(JSON.stringify(bird));
+// 点击开始游戏按钮,小鸟回到初始位置分析:
+// 1. bird对象的坐标设置为初始坐标
+// 2. 在初始坐标上把bird元素渲染出来
+var score = 0;
+var scoreEle = document.getElementById('score');
+var start = document.getElementById('start');
+start.addEventListener("click", function () {
+    running = true;
+    bird = JSON.parse(JSON.stringify(birdInit));
+    // 按时间计分
+    setInterval(function () {
+        if (running) {
+            scoreEle.innerText = score++;
+        }
+    }, 500)
 
+})
 //y游戏的状态
-var running = true;
+var running = false;
 setInterval(function () {
     if (running) {
         //移动背景让小鸟实现水平移动
@@ -40,11 +57,11 @@ document.onclick = function () {
 }
 
 // 空格键控制小鸟飞起
-addEventListener("keydown", function (e) {
-    if (e.keyCode === 32) {
-        bird.speedY = -10;
-    }
-}, false);
+// addEventListener("keydown", function (e) {
+//     if (e.keyCode === 32) {
+//         bird.speedY = -10;
+//     }
+// }, false);
 
 //创建管道
 function createPipe(position) {
@@ -94,20 +111,12 @@ function createPipe(position) {
     }, 30)
 }
 
-
 createPipe(400);
 createPipe(600);
 createPipe(800);
 createPipe(1000);
 
-let score = 0;
-let scoreEle = document.getElementById('score');
-// 按时间计分
-setInterval(function () {
-    if (running) {
-        scoreEle.innerText = score++;
-    }
-}, 500)
+
 
 //背景音乐
 //音乐是否正在播放
