@@ -16,14 +16,20 @@ const birdInit = JSON.parse(JSON.stringify(bird));
 // 点击开始游戏按钮,小鸟回到初始位置分析:
 // 1. bird对象的坐标设置为初始坐标
 // 2. 在初始坐标上把bird元素渲染出来
+
 var score = 0;
+var d;
 var scoreEle = document.getElementById('score');
 var start = document.getElementById('start');
 start.addEventListener("click", function () {
     running = true;
+    score = 0;
     bird = JSON.parse(JSON.stringify(birdInit));
+    resetPipe();
+    //清除Interval的定时器,传入变量名(创建Interval定时器时定义的变量名)
+    clearInterval(d);
     // 按时间计分
-    setInterval(function () {
+    d = setInterval(function () {
         if (running) {
             scoreEle.innerText = score++;
         }
@@ -56,13 +62,6 @@ document.onclick = function () {
     bird.speedY = -10;
 }
 
-// 空格键控制小鸟飞起
-// addEventListener("keydown", function (e) {
-//     if (e.keyCode === 32) {
-//         bird.speedY = -10;
-//     }
-// }, false);
-
 //创建管道
 function createPipe(position) {
     var pipe = {};
@@ -77,6 +76,7 @@ function createPipe(position) {
     uPipe.style.height = pipe.uHeight + 'px';
     uPipe.style.background = 'url(./images/pipe2.png) no-repeat center bottom';
     uPipe.style.position = 'absolute';
+    uPipe.className = "up";
     uPipe.style.top = 0;
     uPipe.style.left = pipe.x + 'px';
     game.appendChild(uPipe); //把uPipe挂载在相应的标签下
@@ -87,6 +87,7 @@ function createPipe(position) {
     dPipe.style.height = pipe.dHeight + 'px';
     dPipe.style.background = 'url("images/pipe1.png") no-repeat center top';
     dPipe.style.position = 'absolute';
+    dPipe.className = "down";
     dPipe.style.top = pipe.dTop + 'px';
     dPipe.style.left = pipe.x + 'px';
     game.appendChild(dPipe); //把dPipe挂载在相应的标签下
@@ -94,9 +95,14 @@ function createPipe(position) {
     //让管道动起来
     setInterval(function () {
         if (running) {
+            if (reset) {
+                pipe.x = uPipe.style.left.slice(0, -2);
+                reset = false;
+            }
             pipe.x -= 2;
             uPipe.style.left = pipe.x + 'px';
             dPipe.style.left = pipe.x + 'px';
+            console.log(pipe.x);
             if (pipe.x < -52) {
                 pipe.x = 800;
             }
@@ -109,6 +115,27 @@ function createPipe(position) {
             }
         }
     }, 30)
+}
+var reset = false;
+
+function resetPipe() {
+    reset = true;
+    // 1. 拿到四个上管道
+    var upList = document.getElementsByClassName('up')
+    // 2. 遍历上管道,分别设置初始坐标
+    for (var i = 0; i < upList.length; i++) {
+        const uP = upList[i];
+        uP.style.left = (400 + 200 * i) + 'px';
+        // 1 400 
+        // 2 600
+        // 3 800
+        // 4 1000
+        // x=400+
+
+
+    }
+
+
 }
 
 createPipe(400);
