@@ -95,20 +95,14 @@ function createPipe(position) {
     //让管道动起来
     setInterval(function () {
         if (running) {
-            if (reset) {
-                pipe.x = uPipe.style.left.slice(0, -2);
-                reset = false;
+            uPipe.style.left = uPipe.style.left.slice(0, -2) - 2 + 'px';
+            dPipe.style.left = uPipe.style.left.slice(0, -2) - 2 + 'px';
+            if (uPipe.style.left.slice(0, -2) < -52) {
+                uPipe.style.left = 800 + 'px';
             }
-            pipe.x -= 2;
-            uPipe.style.left = pipe.x + 'px';
-            dPipe.style.left = pipe.x + 'px';
-            console.log(pipe.x);
-            if (pipe.x < -52) {
-                pipe.x = 800;
-            }
-            var uCheck = bird.x + 34 > pipe.x && bird.x < pipe.x + 52 &&
+            var uCheck = bird.x + 34 > uPipe.style.left.slice(0, -2) && bird.x < uPipe.style.left.slice(0, -2) + 52 &&
                 bird.y < pipe.uHeight;
-            var dCheck = bird.x + 34 > pipe.x && bird.x < pipe.x + 52 &&
+            var dCheck = bird.x + 34 > dPipe.style.left.slice(0, -2) && bird.x < dPipe.style.left.slice(0, -2) + 52 &&
                 bird.y > pipe.uHeight + 200;
             if (uCheck || dCheck) {
                 running = false;
@@ -116,10 +110,9 @@ function createPipe(position) {
         }
     }, 30)
 }
-var reset = false;
+
 
 function resetPipe() {
-    reset = true;
     // 1. 拿到四个上管道
     var upList = document.getElementsByClassName('up')
     // 2. 遍历上管道,分别设置初始坐标
